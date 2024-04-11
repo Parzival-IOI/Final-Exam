@@ -2,8 +2,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ex1 {
-    private int[] array = new int[1];
+    private final int initialNumber = 1;
+    private int[] array = new int[initialNumber];
     private int count = 0;
+    private int arraySize = initialNumber;
 
     public void menu() {
         Scanner scan = new Scanner(System.in);
@@ -13,7 +15,7 @@ public class Ex1 {
             System.out.println("\t1. Input the Number.");
             System.out.println("\t2. View the Number.");
             System.out.println("\t3. Exit.");
-            System.out.print("Enter Number;");
+            System.out.print("Enter Number : ");
             int choice = scan.nextInt();
 
             switch (choice) {
@@ -22,17 +24,17 @@ public class Ex1 {
                     do {
                         System.out.print("Enter negative Number to exit : ");
                         int num = scan.nextInt();
-
                         if(num<0) {
                             out = false;
                         }else {
-                            array = this.addMoreArray(array);
+                            if(count >= arraySize-1) {
+                                arraySize *= 2;
+                                array = Arrays.copyOf(array, arraySize);
+                            }
                             array[count] = num;
                             count++;
                         }
-
                     }while(out);
-
                     break;
                 }
                 case 2 : {
@@ -44,7 +46,7 @@ public class Ex1 {
                     break;
                 }
                 default: {
-                    System.out.println("mtfker Wrong choice !");
+                        System.out.println("mtfker Wrong choice !");
                 }
             }
 
@@ -52,19 +54,7 @@ public class Ex1 {
         }while(exit);
     }
 
-
-
-    public int[] addMoreArray (int[] value) {
-        int[] result = new int[count+1];
-
-        for(int i=0; i< array.length; i++) {
-            result[i] = array[i];
-        }
-
-        return result;
-    }
-
-    public void show () {
+    private void show () {
         System.out.println(Arrays.toString(this.array));
     }
 }
